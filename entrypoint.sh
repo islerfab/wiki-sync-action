@@ -106,8 +106,11 @@ if [ "$DIFF" != "" ]; then
     rsync -avzr --delete --exclude='.git/' "$tmp_dir/" "$DESTINATION"
     debug "Committing and pushing changes"
     (
-      git config user.name "$GIT_AUTHOR_NAME"
-      git config user.email "$GIT_AUTHOR_EMAIL"
+      git config --global user.name "$GIT_AUTHOR_NAME"
+      git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+      ### Workaround: add github workspace as safe directory
+      git config --global --add safe.directory "$GITHUB_WORKSPACE"
       
       # develop could have been modified by the time we get here, so pull before pushing
       # Maybe don't need if we checkout develop...
