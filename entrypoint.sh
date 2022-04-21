@@ -98,6 +98,8 @@ if [ "$DIFF" != "" ]; then
     debug "Committing and pushing changes"
     (
         cd "$tmp_dir" || exit 1
+        ### Workaround: add github workspace as safe directory
+        git config --global --add safe.directory "$tmp_dir"
         git add .
         git commit -m "$WIKI_COMMIT_MESSAGE"
         git push --set-upstream "$GIT_REPOSITORY_URL" master
